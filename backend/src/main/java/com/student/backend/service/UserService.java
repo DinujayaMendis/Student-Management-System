@@ -1,6 +1,10 @@
 package com.student.backend.service;
 
+import com.student.backend.dto.request.UserRequest;
+import com.student.backend.dto.response.UserResponse;
 import com.student.backend.entity.User;
+import com.student.backend.exception.DuplicateResourceException;
+import com.student.backend.exception.ResourceNotFoundException;
 import com.student.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,40 +20,84 @@ public class UserService {
     }
 
     // Create User
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public UserResponse createUser(UserRequest request) {
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new DuplicateResourceException("Email already exists");
+        }
+
+        User user = User.builder()
+                .fullName(request.getFullName())
+                .email(request.getEmail())
+                .password(request.getPassword()) // BCrypt add later
+                .role(request.getRole())
+                .build();
+
+        User savedUser = userRepository.save(user);
+
+        return mapToResponse(savedUser);
     }
 
     // Get All Users
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     // Get User By ID
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserResponse getUserById(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
+
+        return mapToResponse(user);
     }
 
     // Update User
-    public User updateUser(Long id, User updatedUser) {
+    public UserResponse updateUser(Long id, UserRequest request) {
 
-        User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
 
-        if (user != null) {
+        // Email duplicate check
+        userRepository.findByEmail(request.getEmail())
+                .ifPresent(existingUser -> {
+                    if (!existingUser.getId().equals(id)) {
+                        throw new DuplicateResourceException("Email already exists");
+                    }
+                });
 
-            user.setFullName(updatedUser.getFullName());
-            user.setEmail(updatedUser.getEmail());
-            user.setPassword(updatedUser.getPassword());
-            user.setRole(updatedUser.getRole());
+        user.setFullName(request.getFullName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        user.setRole(request.getRole());
 
-            return userRepository.save(user);
-        }
+        User updatedUser = userRepository.save(user);
 
-        return null;
+        return mapToResponse(updatedUser);
     }
 
     // Delete User
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
+
+        userRepository.delete(user);
+    }
+
+    // Entity -> Response DTO
+    private UserResponse mapToResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
     }
 }
