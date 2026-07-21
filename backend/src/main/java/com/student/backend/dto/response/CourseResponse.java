@@ -12,7 +12,7 @@ public class CourseResponse {
     private Long id;
     private String courseName;
     private String courseCode;
-    private String duration;
+    private Integer duration;
     private String lecturer;
 
 }

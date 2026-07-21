@@ -1,6 +1,9 @@
 package com.student.backend.service;
 
+import com.student.backend.dto.request.CourseRequest;
+import com.student.backend.dto.response.CourseResponse;
 import com.student.backend.entity.Course;
+import com.student.backend.exception.ResourceNotFoundException;
 import com.student.backend.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,40 +19,73 @@ public class CourseService {
     }
 
     // Create Course
-    public Course saveCourse(Course course) {
-        return courseRepository.save(course);
+    public CourseResponse createCourse(CourseRequest request) {
+
+        Course course = Course.builder()
+                .courseName(request.getCourseName())
+                .courseCode(request.getCourseCode())
+                .duration(request.getDuration())
+                .lecturer(request.getLecturer())
+                .build();
+
+        Course savedCourse = courseRepository.save(course);
+
+        return mapToResponse(savedCourse);
     }
 
     // Get All Courses
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<CourseResponse> getAllCourses() {
+        return courseRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     // Get Course By ID
-    public Course getCourseById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+    public CourseResponse getCourseById(Long id) {
+
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Course not found with id: " + id));
+
+        return mapToResponse(course);
     }
 
     // Update Course
-    public Course updateCourse(Long id, Course updatedCourse) {
+    public CourseResponse updateCourse(Long id, CourseRequest request) {
 
-        Course course = courseRepository.findById(id).orElse(null);
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Course not found with id: " + id));
 
-        if (course != null) {
+        course.setCourseName(request.getCourseName());
+        course.setCourseCode(request.getCourseCode());
+        course.setDuration(request.getDuration());
+        course.setLecturer(request.getLecturer());
 
-            course.setCourseName(updatedCourse.getCourseName());
-            course.setCourseCode(updatedCourse.getCourseCode());
-            course.setDuration(updatedCourse.getDuration());
-            course.setLecturer(updatedCourse.getLecturer());
+        Course updatedCourse = courseRepository.save(course);
 
-            return courseRepository.save(course);
-        }
-
-        return null;
+        return mapToResponse(updatedCourse);
     }
 
     // Delete Course
     public void deleteCourse(Long id) {
-        courseRepository.deleteById(id);
+
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Course not found with id: " + id));
+
+        courseRepository.delete(course);
+    }
+
+    // Entity -> Response DTO
+    private CourseResponse mapToResponse(Course course) {
+        return CourseResponse.builder()
+                .id(course.getId())
+                .courseName(course.getCourseName())
+                .courseCode(course.getCourseCode())
+                .duration(course.getDuration())
+                .lecturer(course.getLecturer())
+                .build();
     }
 }

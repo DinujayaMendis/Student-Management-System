@@ -1,7 +1,9 @@
 package com.student.backend.controller;
 
-import com.student.backend.entity.Course;
+import com.student.backend.dto.request.CourseRequest;
+import com.student.backend.dto.response.CourseResponse;
 import com.student.backend.service.CourseService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,58 +22,40 @@ public class CourseController {
 
     // Create Course
     @PostMapping
-    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-
-        Course savedCourse = courseService.saveCourse(course);
+    public ResponseEntity<CourseResponse> createCourse(
+            @Valid @RequestBody CourseRequest request) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedCourse);
+                .body(courseService.createCourse(request));
     }
 
     // Get All Courses
     @GetMapping
-    public ResponseEntity<List<Course>> getAllCourses() {
+    public ResponseEntity<List<CourseResponse>> getAllCourses() {
 
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     // Get Course By ID
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
+    public ResponseEntity<CourseResponse> getCourseById(
+            @PathVariable Long id) {
 
-        Course course = courseService.getCourseById(id);
-
-        if (course == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(course);
+        return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
     // Update Course
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(
+    public ResponseEntity<CourseResponse> updateCourse(
             @PathVariable Long id,
-            @RequestBody Course course) {
+            @Valid @RequestBody CourseRequest request) {
 
-        Course updatedCourse = courseService.updateCourse(id, course);
-
-        if (updatedCourse == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(updatedCourse);
+        return ResponseEntity.ok(courseService.updateCourse(id, request));
     }
 
     // Delete Course
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
-
-        Course course = courseService.getCourseById(id);
-
-        if (course == null) {
-            return ResponseEntity.notFound().build();
-        }
 
         courseService.deleteCourse(id);
 
