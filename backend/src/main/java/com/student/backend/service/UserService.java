@@ -6,6 +6,7 @@ import com.student.backend.entity.User;
 import com.student.backend.exception.DuplicateResourceException;
 import com.student.backend.exception.ResourceNotFoundException;
 import com.student.backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,13 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Create User
@@ -29,7 +34,7 @@ public class UserService {
         User user = User.builder()
                 .fullName(request.getFullName())
                 .email(request.getEmail())
-                .password(request.getPassword()) // BCrypt add later
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
 
@@ -63,7 +68,7 @@ public class UserService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
 
-        // Email duplicate check
+        // Check duplicate email
         userRepository.findByEmail(request.getEmail())
                 .ifPresent(existingUser -> {
                     if (!existingUser.getId().equals(id)) {
@@ -73,7 +78,7 @@ public class UserService {
 
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(request.getRole());
 
         User updatedUser = userRepository.save(user);
@@ -93,6 +98,7 @@ public class UserService {
 
     // Entity -> Response DTO
     private UserResponse mapToResponse(User user) {
+
         return UserResponse.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())
