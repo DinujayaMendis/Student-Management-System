@@ -1,6 +1,9 @@
 package com.student.backend.service;
 
+import com.student.backend.dto.request.StudentRequest;
+import com.student.backend.dto.response.StudentResponse;
 import com.student.backend.entity.Student;
+import com.student.backend.exception.ResourceNotFoundException;
 import com.student.backend.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,42 +19,89 @@ public class StudentService {
     }
 
     // Create Student
-    public Student saveStudent(Student student) {
-        return studentRepository.save(student);
+    public StudentResponse createStudent(StudentRequest request) {
+
+        Student student = Student.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .course(request.getCourse())
+                .age(request.getAge())
+                .build();
+
+        Student savedStudent = studentRepository.save(student);
+
+        return mapToResponse(savedStudent);
     }
 
     // Get All Students
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentResponse> getAllStudents() {
+
+        return studentRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     // Get Student By ID
-    public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElse(null);
+    public StudentResponse getStudentById(Long id) {
+
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Student not found with id: " + id
+                        )
+                );
+
+        return mapToResponse(student);
     }
 
     // Update Student
-    public Student updateStudent(Long id, Student updatedStudent) {
+    public StudentResponse updateStudent(
+            Long id,
+            StudentRequest request) {
 
-        Student student = studentRepository.findById(id).orElse(null);
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Student not found with id: " + id
+                        )
+                );
 
-        if (student != null) {
+        student.setFirstName(request.getFirstName());
+        student.setLastName(request.getLastName());
+        student.setEmail(request.getEmail());
+        student.setCourse(request.getCourse());
+        student.setAge(request.getAge());
 
-            student.setFirstName(updatedStudent.getFirstName());
-            student.setLastName(updatedStudent.getLastName());
-            student.setEmail(updatedStudent.getEmail());
-            student.setCourse(updatedStudent.getCourse());
-            student.setAge(updatedStudent.getAge());
+        Student updatedStudent = studentRepository.save(student);
 
-            return studentRepository.save(student);
-        }
-
-        return null;
+        return mapToResponse(updatedStudent);
     }
 
     // Delete Student
     public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
+
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Student not found with id: " + id
+                        )
+                );
+
+        studentRepository.delete(student);
     }
 
+    // Convert Student Entity -> StudentResponse DTO
+    private StudentResponse mapToResponse(Student student) {
+
+        return StudentResponse.builder()
+                .id(student.getId())
+                .firstName(student.getFirstName())
+                .lastName(student.getLastName())
+                .email(student.getEmail())
+                .course(student.getCourse())
+                .age(student.getAge())
+                .build();
+    }
 }
