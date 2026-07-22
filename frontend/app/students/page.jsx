@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import AppLayout from "@/components/AppLayout";
 import Modal from "@/components/Modal";
 import { studentService } from "@/services/student";
+import { FiPlus, FiEdit2, FiTrash2 } from "react-icons/fi";
 
 export default function Students() {
   const [students, setStudents] = useState([]);
@@ -114,19 +115,7 @@ export default function Students() {
           onClick={() => handleOpenModal()}
           className="btn-primary flex items-center gap-2"
         >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
+          <FiPlus className="w-5 h-5" />
           Add Student
         </button>
       </div>
@@ -207,14 +196,16 @@ export default function Students() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
                         onClick={() => handleOpenModal(student)}
-                        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-4 transition-colors"
+                        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-4 transition-colors inline-flex items-center gap-1"
                       >
+                        <FiEdit2 className="w-4 h-4" />
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(student.id)}
-                        className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 transition-colors"
+                        className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 transition-colors inline-flex items-center gap-1"
                       >
+                        <FiTrash2 className="w-4 h-4" />
                         Delete
                       </button>
                     </td>

@@ -4,6 +4,7 @@ import AppLayout from "@/components/AppLayout";
 import { studentService } from "@/services/student";
 import { courseService } from "@/services/course";
 import Link from "next/link";
+import { FiUsers, FiBook, FiUserPlus, FiFilePlus, FiArrowRight } from "react-icons/fi";
 
 export default function Dashboard() {
   const [stats, setStats] = useState({ students: 0, courses: 0 });
@@ -54,8 +55,8 @@ export default function Dashboard() {
                 {loading ? "..." : stats.students}
               </h3>
             </div>
-            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-2xl">
-              🎓
+            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-2xl text-indigo-600 dark:text-indigo-400">
+              <FiUsers />
             </div>
           </div>
           <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
@@ -64,19 +65,7 @@ export default function Dashboard() {
               className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 transition-colors flex items-center gap-1"
             >
               View all students
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              <FiArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -93,8 +82,8 @@ export default function Dashboard() {
                 {loading ? "..." : stats.courses}
               </h3>
             </div>
-            <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-2xl">
-              📚
+            <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-2xl text-purple-600 dark:text-purple-400">
+              <FiBook />
             </div>
           </div>
           <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
@@ -103,19 +92,7 @@ export default function Dashboard() {
               className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 transition-colors flex items-center gap-1"
             >
               View all courses
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              <FiArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -132,7 +109,7 @@ export default function Dashboard() {
               className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-md transition-all group"
             >
               <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-3 group-hover:scale-110 transition-transform">
-                ➕
+                <FiUserPlus className="w-5 h-5" />
               </div>
               <h4 className="font-medium text-gray-900 dark:text-white">
                 Add Student
@@ -146,7 +123,7 @@ export default function Dashboard() {
               className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-500 hover:shadow-md transition-all group"
             >
               <div className="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-3 group-hover:scale-110 transition-transform">
-                📖
+                <FiFilePlus className="w-5 h-5" />
               </div>
               <h4 className="font-medium text-gray-900 dark:text-white">
                 Add Course

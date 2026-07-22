@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { FiPieChart, FiUsers, FiBook, FiUser } from "react-icons/fi";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -11,13 +12,13 @@ export default function Sidebar() {
 
   const navItems = isAdmin
     ? [
-        { name: "Dashboard", href: "/dashboard", icon: "📊" },
-        { name: "Students", href: "/students", icon: "🎓" },
-        { name: "Courses", href: "/courses", icon: "📚" },
+        { name: "Dashboard", href: "/dashboard", icon: FiPieChart },
+        { name: "Students", href: "/students", icon: FiUsers },
+        { name: "Courses", href: "/courses", icon: FiBook },
       ]
     : [
-        { name: "My Profile", href: "/profile", icon: "👤" },
-        { name: "Courses", href: "/courses", icon: "📚" },
+        { name: "My Profile", href: "/profile", icon: FiUser },
+        { name: "Courses", href: "/courses", icon: FiBook },
       ];
 
   return (
@@ -34,20 +35,20 @@ export default function Sidebar() {
       <nav className="flex-1 px-4 space-y-2 mt-4">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                isActive
-                  ? "bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-medium"
-                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
-              }`}
-            >
-              <span className="text-xl">{item.icon}</span>
-              {item.name}
-            </Link>
-          );
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex items-center px-4 py-3 mb-2 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 font-bold shadow-sm"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-indigo-600 dark:hover:text-indigo-400"
+                }`}
+              >
+                <item.icon className="mr-3 w-5 h-5" />
+                {item.name}
+              </Link>
+            );
         })}
       </nav>
 
