@@ -1,8 +1,8 @@
-import api from '@/utils/api';
+import api from "@/utils/api";
 
 export const courseService = {
   getAllCourses: async () => {
-    const response = await api.get('/courses');
+    const response = await api.get("/courses");
     return response.data;
   },
   getCourseById: async (id) => {
@@ -10,7 +10,7 @@ export const courseService = {
     return response.data;
   },
   createCourse: async (courseData) => {
-    const response = await api.post('/courses', courseData);
+    const response = await api.post("/courses", courseData);
     return response.data;
   },
   updateCourse: async (id, courseData) => {
@@ -20,5 +20,5 @@ export const courseService = {
   deleteCourse: async (id) => {
     const response = await api.delete(`/courses/${id}`);
     return response.data;
-  }
+  },
 };

@@ -1,8 +1,8 @@
-import api from '@/utils/api';
+import api from "@/utils/api";
 
 export const studentService = {
   getAllStudents: async () => {
-    const response = await api.get('/students');
+    const response = await api.get("/students");
     return response.data;
   },
   getStudentById: async (id) => {
@@ -14,7 +14,7 @@ export const studentService = {
     return response.data;
   },
   createStudent: async (studentData) => {
-    const response = await api.post('/students', studentData);
+    const response = await api.post("/students", studentData);
     return response.data;
   },
   updateStudent: async (id, studentData) => {
@@ -24,5 +24,5 @@ export const studentService = {
   deleteStudent: async (id) => {
     const response = await api.delete(`/students/${id}`);
     return response.data;
-  }
+  },
 };

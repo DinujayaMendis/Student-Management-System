@@ -1,16 +1,16 @@
-'use client';
-import { useState } from 'react';
-import { authService } from '@/services/auth';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useState } from "react";
+import { authService } from "@/services/auth";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: ''
+    fullName: "",
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -20,14 +20,14 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       await authService.register(formData);
-      router.push('/login');
+      router.push("/login");
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      setError(err.response?.data?.message || "Registration failed");
     } finally {
       setIsLoading(false);
     }
@@ -52,14 +52,14 @@ export default function Register() {
             Join our platform to manage students and courses
           </p>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-lg text-sm text-center font-medium">
               {error}
             </div>
           )}
-          
+
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -114,15 +114,18 @@ export default function Register() {
               {isLoading ? (
                 <div className="h-5 w-5 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
               ) : (
-                'Sign up'
+                "Sign up"
               )}
             </button>
           </div>
         </form>
 
         <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
-          Already have an account?{' '}
-          <Link href="/login" className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500"
+          >
             Sign in
           </Link>
         </p>

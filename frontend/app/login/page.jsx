@@ -1,30 +1,30 @@
-'use client';
-import { useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { authService } from '@/services/auth';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { authService } from "@/services/auth";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       const data = await authService.login({ email, password });
       const { token, fullName, role } = data;
-      
+
       login({ email, fullName, role }, token);
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid email or password');
+      setError(err.response?.data?.message || "Invalid email or password");
     } finally {
       setIsLoading(false);
     }
@@ -49,14 +49,14 @@ export default function Login() {
             Please sign in to your account
           </p>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-lg text-sm text-center font-medium">
               {error}
             </div>
           )}
-          
+
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -95,15 +95,18 @@ export default function Login() {
               {isLoading ? (
                 <div className="h-5 w-5 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
               ) : (
-                'Sign in'
+                "Sign in"
               )}
             </button>
           </div>
         </form>
 
         <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
-          Don't have an account?{' '}
-          <Link href="/register" className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
+          Don't have an account?{" "}
+          <Link
+            href="/register"
+            className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500"
+          >
             Register here
           </Link>
         </p>
