@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import AppLayout from '@/components/AppLayout';
 import Modal from '@/components/Modal';
-import api from '@/utils/api';
+import { studentService } from '@/services/student';
 
 export default function Students() {
   const [students, setStudents] = useState([]);
@@ -23,8 +23,8 @@ export default function Students() {
   const fetchStudents = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/students');
-      setStudents(response.data);
+      const data = await studentService.getAllStudents();
+      setStudents(data);
     } catch (err) {
       console.error('Failed to fetch students', err);
     } finally {
@@ -71,9 +71,9 @@ export default function Students() {
     try {
       const payload = { ...formData, age: parseInt(formData.age) };
       if (isEditMode) {
-        await api.put(`/students/${currentStudentId}`, payload);
+        await studentService.updateStudent(currentStudentId, payload);
       } else {
-        await api.post('/students', payload);
+        await studentService.createStudent(payload);
       }
       handleCloseModal();
       fetchStudents();
@@ -85,7 +85,7 @@ export default function Students() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       try {
-        await api.delete(`/students/${id}`);
+        await studentService.deleteStudent(id);
         fetchStudents();
       } catch (err) {
         console.error('Failed to delete student', err);

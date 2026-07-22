@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import api from '@/utils/api';
+import { authService } from '@/services/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -24,7 +24,7 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      await api.post('/auth/register', formData);
+      await authService.register(formData);
       router.push('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');

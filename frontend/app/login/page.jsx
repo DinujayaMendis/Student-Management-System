@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import api from '@/utils/api';
+import { authService } from '@/services/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -19,8 +19,8 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const response = await api.post('/auth/login', { email, password });
-      const { token, fullName, role } = response.data;
+      const data = await authService.login({ email, password });
+      const { token, fullName, role } = data;
       
       login({ email, fullName, role }, token);
     } catch (err) {

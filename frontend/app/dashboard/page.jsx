@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import AppLayout from '@/components/AppLayout';
-import api from '@/utils/api';
+import { studentService } from '@/services/student';
+import { courseService } from '@/services/course';
 import Link from 'next/link';
 
 export default function Dashboard() {
@@ -12,12 +13,12 @@ export default function Dashboard() {
     const fetchStats = async () => {
       try {
         const [studentsRes, coursesRes] = await Promise.all([
-          api.get('/students'),
-          api.get('/courses')
+          studentService.getAllStudents(),
+          courseService.getAllCourses()
         ]);
         setStats({
-          students: studentsRes.data.length,
-          courses: coursesRes.data.length
+          students: studentsRes.length,
+          courses: coursesRes.length
         });
       } catch (error) {
         console.error('Failed to fetch stats', error);

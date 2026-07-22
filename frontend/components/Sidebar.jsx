@@ -7,11 +7,18 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { user } = useAuth();
 
-  const navItems = [
-    { name: 'Dashboard', href: '/dashboard', icon: '📊' },
-    { name: 'Students', href: '/students', icon: '🎓' },
-    { name: 'Courses', href: '/courses', icon: '📚' },
-  ];
+  const isAdmin = user?.role === 'ADMIN';
+  
+  const navItems = isAdmin 
+    ? [
+        { name: 'Dashboard', href: '/dashboard', icon: '📊' },
+        { name: 'Students', href: '/students', icon: '🎓' },
+        { name: 'Courses', href: '/courses', icon: '📚' },
+      ]
+    : [
+        { name: 'My Profile', href: '/profile', icon: '👤' },
+        { name: 'Courses', href: '/courses', icon: '📚' },
+      ];
 
   return (
     <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 hidden md:flex flex-col h-screen fixed left-0 top-0">

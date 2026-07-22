@@ -1,19 +1,24 @@
 'use client';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
 export default function AppLayout({ children }) {
-  const { isAuthenticated, loading } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push('/login');
+    if (!loading) {
+      if (!isAuthenticated) {
+        router.push('/login');
+      } else if (user?.role === 'STUDENT' && (pathname === '/dashboard' || pathname === '/students')) {
+        router.push('/profile');
+      }
     }
-  }, [isAuthenticated, loading, router]);
+  }, [isAuthenticated, loading, router, user, pathname]);
 
   if (loading) {
     return (
