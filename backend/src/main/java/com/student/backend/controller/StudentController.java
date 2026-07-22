@@ -52,6 +52,16 @@ public class StudentController {
         );
     }
 
+    // Get Student By Email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<StudentResponse> getStudentByEmail(
+            @PathVariable String email) {
+
+        return ResponseEntity.ok(
+                studentService.getStudentByEmail(email)
+        );
+    }
+
     // Update Student
     @PutMapping("/{id}")
     public ResponseEntity<StudentResponse> updateStudent(

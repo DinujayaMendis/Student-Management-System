@@ -6,10 +6,12 @@ import com.student.backend.entity.Student;
 import com.student.backend.exception.ResourceNotFoundException;
 import com.student.backend.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class StudentService {
 
     private final StudentRepository studentRepository;
@@ -53,6 +55,17 @@ public class StudentService {
                         )
                 );
 
+        return mapToResponse(student);
+    }
+
+    // Get Student By Email
+    public StudentResponse getStudentByEmail(String email) {
+        Student student = studentRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Student not found with email: " + email
+                        )
+                );
         return mapToResponse(student);
     }
 
