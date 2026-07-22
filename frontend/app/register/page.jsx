@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: '',
     email: '',
     password: ''
   });
@@ -62,35 +61,19 @@ export default function Register() {
           )}
           
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  name="firstName"
-                  required
-                  className="input-field"
-                  placeholder="John"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  name="lastName"
-                  required
-                  className="input-field"
-                  placeholder="Doe"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                required
+                className="input-field"
+                placeholder="John Doe"
+                value={formData.fullName}
+                onChange={handleChange}
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
