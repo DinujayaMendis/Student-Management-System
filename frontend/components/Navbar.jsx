@@ -1,5 +1,6 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 import { FiBell } from "react-icons/fi";
 
 export default function Navbar() {
@@ -8,9 +9,13 @@ export default function Navbar() {
   return (
     <header className="h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 sticky top-0 z-10 w-full">
       <div className="md:hidden flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">
-          S
-        </div>
+        <Image
+          src="/logo.png"
+          alt="EduManage Logo"
+          width={32}
+          height={32}
+          className="rounded-lg object-contain"
+        />
         <h1 className="font-bold text-gray-900 dark:text-white">EduManage</h1>
       </div>
       <div className="hidden md:block">

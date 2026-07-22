@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { authService } from "@/services/auth";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Register() {
@@ -42,8 +43,14 @@ export default function Register() {
 
       <div className="max-w-md w-full space-y-8 glass-card p-8 relative z-10 my-8">
         <div>
-          <div className="mx-auto w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <span className="text-3xl font-bold text-white">S</span>
+          <div className="mx-auto w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg bg-white p-1">
+            <Image
+              src="/logo.png"
+              alt="EduManage Logo"
+              width={56}
+              height={56}
+              className="rounded-xl object-contain"
+            />
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
             Create an account

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { FiPieChart, FiUsers, FiBook, FiUser } from "react-icons/fi";
@@ -24,9 +25,13 @@ export default function Sidebar() {
   return (
     <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 hidden md:flex flex-col h-screen fixed left-0 top-0">
       <div className="p-6 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">
-          S
-        </div>
+        <Image
+          src="/logo.png"
+          alt="EduManage Logo"
+          width={32}
+          height={32}
+          className="rounded-lg object-contain"
+        />
         <h1 className="text-xl font-bold text-gray-900 dark:text-white">
           EduManage
         </h1>
