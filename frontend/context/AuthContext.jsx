@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
     if (userData.role === "ADMIN") {
       router.push("/dashboard");
     } else {
-      router.push("/students");
+      router.push("/profile");
     }
   };
 
