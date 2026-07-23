@@ -99,17 +99,17 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="card p-6">
+        <div className="card p-6 bg-gradient-to-br from-indigo-50/50 via-white to-violet-50/50 dark:from-indigo-900/10 dark:via-gray-800 dark:to-violet-900/10 border-t-4 border-t-indigo-500">
           <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
             Quick Actions
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <Link
               href="/students"
-              className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-md transition-all group"
+              className="p-4 rounded-xl border border-indigo-100 dark:border-indigo-900/30 bg-indigo-50/40 dark:bg-indigo-900/10 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-lg hover:bg-gradient-to-br hover:from-indigo-50/80 hover:to-white dark:hover:from-indigo-900/20 dark:hover:to-gray-800 transition-all duration-300 group"
             >
-              <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-3 group-hover:scale-110 transition-transform">
-                <FiUserPlus className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 shadow-md shadow-indigo-200 dark:shadow-none flex items-center justify-center text-white mb-4 group-hover:scale-110 group-hover:-translate-y-1 transition-all">
+                <FiUserPlus className="w-6 h-6" />
               </div>
               <h4 className="font-medium text-gray-900 dark:text-white">
                 Add Student
@@ -120,10 +120,10 @@ export default function Dashboard() {
             </Link>
             <Link
               href="/courses"
-              className="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-md transition-all group"
+              className="p-4 rounded-xl border border-violet-100 dark:border-violet-900/30 bg-violet-50/40 dark:bg-violet-900/10 hover:border-violet-300 dark:hover:border-violet-700 hover:shadow-lg hover:bg-gradient-to-br hover:from-violet-50/80 hover:to-white dark:hover:from-violet-900/20 dark:hover:to-gray-800 transition-all duration-300 group"
             >
-              <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-3 group-hover:scale-110 transition-transform">
-                <FiFilePlus className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-md shadow-violet-200 dark:shadow-none flex items-center justify-center text-white mb-4 group-hover:scale-110 group-hover:-translate-y-1 transition-all">
+                <FiFilePlus className="w-6 h-6" />
               </div>
               <h4 className="font-medium text-gray-900 dark:text-white">
                 Add Course
