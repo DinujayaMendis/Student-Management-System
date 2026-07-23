@@ -57,7 +57,7 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all;
+    @apply w-full px-4 py-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)] dark:focus:border-[var(--primary)] transition-all hover:border-gray-400 dark:hover:border-gray-500 shadow-sm;
   }
   
   .card {
