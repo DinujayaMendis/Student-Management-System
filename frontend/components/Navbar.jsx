@@ -17,7 +17,9 @@ export default function Navbar() {
           height={32}
           className="rounded-lg object-contain"
         />
-        <h1 className="font-bold text-gray-900 dark:text-white">EduManage</h1>
+        <h1 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 tracking-tight">
+          EduManage
+        </h1>
       </div>
       <div className="hidden md:block">
         {/* Placeholder for left side of navbar on desktop */}
@@ -25,12 +27,13 @@ export default function Navbar() {
 
       <div className="flex items-center gap-4 ml-auto">
         <ThemeToggle />
-        <button className="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors">
-          <FiBell className="w-6 h-6" />
+        <button className="p-2 text-indigo-400 dark:text-indigo-300 hover:text-indigo-600 dark:hover:text-indigo-200 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 rounded-xl transition-all relative">
+          <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+          <FiBell className="w-5 h-5" />
         </button>
         <button
           onClick={logout}
-          className="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-lg"
+          className="text-sm font-bold text-white bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 shadow-md shadow-rose-500/20 px-4 py-2 rounded-xl transition-all"
         >
           Logout
         </button>

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import AppLayout from "@/components/AppLayout";
 import { studentService } from "@/services/student";
 import { useAuth } from "@/context/AuthContext";
-import { FiEdit2 } from "react-icons/fi";
+import { FiEdit2, FiUser, FiMail, FiBook, FiCalendar } from "react-icons/fi";
 
 export default function Profile() {
   const { user } = useAuth();
@@ -113,7 +113,7 @@ export default function Profile() {
           {profile && !isEditMode && (
             <button
               onClick={() => setIsEditMode(true)}
-              className="btn-secondary flex items-center gap-2"
+              className="btn-secondary flex items-center gap-2 bg-gray-400 hover:bg-blue-500 text-white"
             >
               <FiEdit2 className="w-4 h-4" />
               Edit Profile
@@ -135,40 +135,76 @@ export default function Profile() {
             )}
 
             {!isEditMode && profile ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Full Name
-                  </h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
+              <div className="flex flex-col items-center sm:items-start sm:flex-row gap-8">
+                
+                {/* Profile Avatar & Quick Info */}
+                <div className="flex flex-col items-center bg-gray-50 dark:bg-gray-800/30 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 w-full sm:w-1/3">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg flex items-center justify-center text-white text-3xl font-bold mb-4">
+                    {profile.firstName.charAt(0)}{profile.lastName.charAt(0)}
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white text-center">
                     {profile.firstName} {profile.lastName}
-                  </p>
+                  </h2>
+                  <span className="px-3 py-1 mt-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 text-center">
+                    Student
+                  </span>
                 </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Email Address
-                  </h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                    {profile.email}
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Enrolled Course
-                  </h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                    <span className="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300">
-                      {profile.course}
-                    </span>
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Age
-                  </h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                    {profile.age} years old
-                  </p>
+
+                {/* Detailed Information */}
+                <div className="w-full sm:w-2/3 space-y-6">
+                  
+                  {/* Personal Info Section */}
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
+                      Personal Information
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700 transition-all">
+                        <div className="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                          <FiUser className="mr-2 text-indigo-600 dark:text-indigo-400" /> Full Name
+                        </div>
+                        <p className="text-base font-semibold text-gray-900 dark:text-white">
+                          {profile.firstName} {profile.lastName}
+                        </p>
+                      </div>
+                      
+                      <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700 transition-all">
+                        <div className="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                          <FiMail className="mr-2 text-indigo-600 dark:text-indigo-400" /> Email Address
+                        </div>
+                        <p className="text-base font-semibold text-gray-900 dark:text-white">
+                          {profile.email}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Academic Info Section */}
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
+                      Academic Details
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700 transition-all">
+                        <div className="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                          <FiBook className="mr-2 text-indigo-600 dark:text-indigo-400" /> Enrolled Course
+                        </div>
+                        <p className="text-base font-semibold text-gray-900 dark:text-white">
+                          {profile.course}
+                        </p>
+                      </div>
+                      
+                      <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-700 transition-all">
+                        <div className="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                          <FiCalendar className="mr-2 text-indigo-600 dark:text-indigo-400" /> Age
+                        </div>
+                        <p className="text-base font-semibold text-gray-900 dark:text-white">
+                          {profile.age} years old
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             ) : (
