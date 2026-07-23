@@ -116,7 +116,7 @@ export default function Profile() {
           )}
         </div>
 
-        <div className="card p-8">
+        <div className="card p-8 border-t-4 border-t-indigo-600">
           <div>
             {error && (
               <div className="mb-6 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm font-medium">

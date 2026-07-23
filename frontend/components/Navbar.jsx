@@ -1,5 +1,6 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
+import ThemeToggle from "./ThemeToggle";
 import Image from "next/image";
 import { FiBell } from "react-icons/fi";
 
@@ -23,6 +24,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center gap-4 ml-auto">
+        <ThemeToggle />
         <button className="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors">
           <FiBell className="w-6 h-6" />
         </button>
