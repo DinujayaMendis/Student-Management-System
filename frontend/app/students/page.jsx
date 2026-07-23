@@ -172,7 +172,7 @@ export default function Students() {
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 shadow-md shadow-indigo-200 dark:shadow-none flex items-center justify-center text-white font-bold">
                           {student.firstName.charAt(0)}
                         </div>
                         <div className="ml-4">

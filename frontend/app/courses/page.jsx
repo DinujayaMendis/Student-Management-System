@@ -138,10 +138,10 @@ export default function Courses() {
           courses.map((course) => (
             <div
               key={course.id}
-              className="card p-6 flex flex-col h-full hover:shadow-md transition-shadow group"
+              className="card p-6 flex flex-col h-full hover:shadow-lg transition-all duration-300 group border-t-4 border-t-indigo-500 bg-indigo-50/40 dark:bg-indigo-900/20 hover:bg-indigo-100/50 dark:hover:bg-indigo-900/40"
             >
               <div className="flex justify-between items-start mb-4">
-                <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center font-bold text-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-blue-600 text-white shadow-md shadow-indigo-200 dark:shadow-none rounded-xl flex items-center justify-center font-bold text-lg">
                   {course.courseCode.substring(0, 2).toUpperCase()}
                 </div>
                 {isAdmin && (
