@@ -65,7 +65,12 @@ export default function Profile() {
     setSuccess("");
 
     try {
-      const payload = { ...formData, age: parseInt(formData.age) };
+      const payload = {
+        ...formData,
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        age: parseInt(formData.age, 10),
+      };
       if (profile?.id) {
         // Update existing
         const data = await studentService.updateStudent(profile.id, payload);
@@ -184,6 +189,10 @@ export default function Profile() {
                       type="text"
                       name="firstName"
                       required
+                      pattern="^[a-zA-Z\s]+$"
+                      minLength={2}
+                      maxLength={50}
+                      title="Only letters and spaces allowed (2-50 characters)"
                       className="input-field"
                       value={formData.firstName}
                       onChange={handleChange}
@@ -197,6 +206,10 @@ export default function Profile() {
                       type="text"
                       name="lastName"
                       required
+                      pattern="^[a-zA-Z\s]+$"
+                      minLength={2}
+                      maxLength={50}
+                      title="Only letters and spaces allowed (2-50 characters)"
                       className="input-field"
                       value={formData.lastName}
                       onChange={handleChange}
@@ -226,14 +239,22 @@ export default function Profile() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Enrolled Course
                     </label>
-                    <input
-                      type="text"
+                    <select
                       name="course"
                       required
                       className="input-field"
                       value={formData.course}
                       onChange={handleChange}
-                    />
+                    >
+                      <option value="" disabled>Select a course</option>
+                      <option value="Information Technology">Information Technology</option>
+                      <option value="Software Engineering">Software Engineering</option>
+                      <option value="Computer Science">Computer Science</option>
+                      <option value="Cyber Security">Cyber Security</option>
+                      <option value="Data Science">Data Science</option>
+                      <option value="Interactive Media">Interactive Media</option>
+                      <option value="Business Management">Business Management</option>
+                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -245,6 +266,7 @@ export default function Profile() {
                       required
                       min="16"
                       max="100"
+                      step="1"
                       className="input-field"
                       value={formData.age}
                       onChange={handleChange}
