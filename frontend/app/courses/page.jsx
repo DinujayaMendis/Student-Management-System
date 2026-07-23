@@ -68,7 +68,11 @@ export default function Courses() {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    let value = e.target.value;
+    if (e.target.name === "courseCode") {
+      value = value.toUpperCase();
+    }
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -76,7 +80,13 @@ export default function Courses() {
     setError("");
 
     try {
-      const payload = { ...formData, duration: parseInt(formData.duration) };
+      const payload = {
+        ...formData,
+        courseName: formData.courseName.trim(),
+        lecturer: formData.lecturer.trim(),
+        duration: parseInt(formData.duration, 10),
+      };
+      
       if (isEditMode) {
         await courseService.updateCourse(currentCourseId, payload);
       } else {
@@ -200,14 +210,22 @@ export default function Courses() {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Course Name
             </label>
-            <input
-              type="text"
+            <select
               name="courseName"
               required
               className="input-field"
               value={formData.courseName}
               onChange={handleChange}
-            />
+            >
+              <option value="" disabled>Select a course</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Software Engineering">Software Engineering</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Cyber Security">Cyber Security</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Interactive Media">Interactive Media</option>
+              <option value="Business Management">Business Management</option>
+            </select>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -219,6 +237,10 @@ export default function Courses() {
                 type="text"
                 name="courseCode"
                 required
+                pattern="^[A-Z0-9]+$"
+                minLength={3}
+                maxLength={10}
+                title="Only uppercase letters and numbers allowed (3-10 characters)"
                 className="input-field"
                 value={formData.courseCode}
                 onChange={handleChange}
@@ -233,6 +255,8 @@ export default function Courses() {
                 name="duration"
                 required
                 min="1"
+                max="60"
+                step="1"
                 className="input-field"
                 value={formData.duration}
                 onChange={handleChange}
@@ -248,6 +272,10 @@ export default function Courses() {
               type="text"
               name="lecturer"
               required
+              pattern="^[a-zA-Z\s\.]+$"
+              minLength={3}
+              maxLength={50}
+              title="Only letters, dots, and spaces allowed (3-50 characters)"
               className="input-field"
               value={formData.lecturer}
               onChange={handleChange}
